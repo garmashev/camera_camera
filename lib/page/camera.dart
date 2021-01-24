@@ -404,6 +404,17 @@ class _CameraState extends State<Camera> {
                                       radius: 25.0,
                                     ),
                                     _getButtonPhoto(),
+                                    CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      child: IconButton(
+                                        color: Colors.transparent,
+                                        onPressed: widget.onTransformChange,
+                                        icon: Icon(
+                                          Icons.compare_arrows_outlined,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
                                     (widget.enableCameraChange)
                                         ? CircleAvatar(
                                             child: RotateIcon(
