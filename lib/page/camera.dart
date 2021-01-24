@@ -21,6 +21,8 @@ class Camera extends StatefulWidget {
   final Function(File image) onFile;
   final bool enableCameraChange;
   final CameraSide initialCamera;
+  final double previewTransform;
+  final VoidCallback onTransformChange;
   final Function(CameraLensDirection direction, List<CameraDescription> cameras)
       onChangeCamera;
 
@@ -34,6 +36,8 @@ class Camera extends StatefulWidget {
     this.onChangeCamera,
     this.initialCamera = CameraSide.back,
     this.enableCameraChange = true,
+    this.previewTransform: 0,
+    this.onTransformChange,
   }) : super(key: key);
   @override
   _CameraState createState() => _CameraState();
@@ -165,13 +169,18 @@ class _CameraState extends State<Camera> {
                       stream: bloc.imagePath.stream,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return OrientationWidget(
-                            orientation: orientation,
-                            child: SizedBox(
-                              height: sizeImage.height,
-                              width: sizeImage.height,
-                              child: Image.file(snapshot.data,
-                                  fit: BoxFit.contain),
+                          return Transform(
+                            alignment: Alignment.center,
+                            transform:
+                                Matrix4.rotationY(widget.previewTransform),
+                            child: OrientationWidget(
+                              orientation: orientation,
+                              child: SizedBox(
+                                height: sizeImage.height,
+                                width: sizeImage.height,
+                                child: Image.file(snapshot.data,
+                                    fit: BoxFit.contain),
+                              ),
                             ),
                           );
                         } else {
@@ -286,6 +295,13 @@ class _CameraState extends State<Camera> {
                                         ),
                                         backgroundColor: Colors.black38,
                                         radius: 25.0,
+                                      ),
+                                      IconButton(
+                                        onPressed: widget.onTransformChange,
+                                        icon: Icon(
+                                          Icons.compare_arrows_outlined,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                       _getButtonPhoto(),
                                       (widget.enableCameraChange)
