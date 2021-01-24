@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:camera_camera/page/bloc/bloc_camera.dart';
 import 'package:camera_camera/shared/widgets/orientation_icon.dart';
 import 'package:camera_camera/shared/widgets/rotate_icon.dart';
@@ -171,8 +172,8 @@ class _CameraState extends State<Camera> {
                         if (snapshot.hasData) {
                           return Transform(
                             alignment: Alignment.center,
-                            transform:
-                                Matrix4.rotationY(widget.previewTransform),
+                            transform: Matrix4.rotationY(
+                                widget.previewTransform == pi ? 0 : pi),
                             child: OrientationWidget(
                               orientation: orientation,
                               child: SizedBox(
@@ -186,39 +187,44 @@ class _CameraState extends State<Camera> {
                         } else {
                           return Stack(
                             children: <Widget>[
-                              Center(
-                                child: StreamBuilder<bool>(
-                                    stream: bloc.selectCamera.stream,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        if (snapshot.data) {
-                                          previewRatio = bloc
-                                              .controllCamera.value.aspectRatio;
+                              Transform(
+                                alignment: Alignment.center,
+                                transform:
+                                    Matrix4.rotationY(widget.previewTransform),
+                                child: Center(
+                                  child: StreamBuilder<bool>(
+                                      stream: bloc.selectCamera.stream,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          if (snapshot.data) {
+                                            previewRatio = bloc.controllCamera
+                                                .value.aspectRatio;
 
-                                          return widget.mode ==
-                                                  CameraMode.fullscreen
-                                              ? OverflowBox(
-                                                  maxHeight: size.height,
-                                                  maxWidth: size.height *
-                                                      previewRatio,
-                                                  child: CameraPreview(
-                                                      bloc.controllCamera),
-                                                )
-                                              : AspectRatio(
-                                                  aspectRatio: bloc
-                                                      .controllCamera
-                                                      .value
-                                                      .aspectRatio,
-                                                  child: CameraPreview(
-                                                      bloc.controllCamera),
-                                                );
+                                            return widget.mode ==
+                                                    CameraMode.fullscreen
+                                                ? OverflowBox(
+                                                    maxHeight: size.height,
+                                                    maxWidth: size.height *
+                                                        previewRatio,
+                                                    child: CameraPreview(
+                                                        bloc.controllCamera),
+                                                  )
+                                                : AspectRatio(
+                                                    aspectRatio: bloc
+                                                        .controllCamera
+                                                        .value
+                                                        .aspectRatio,
+                                                    child: CameraPreview(
+                                                        bloc.controllCamera),
+                                                  );
+                                          } else {
+                                            return Container();
+                                          }
                                         } else {
                                           return Container();
                                         }
-                                      } else {
-                                        return Container();
-                                      }
-                                    }),
+                                      }),
+                                ),
                               ),
                               if (widget.imageMask != null)
                                 Center(
