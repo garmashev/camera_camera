@@ -308,27 +308,27 @@ class _CameraState extends State<Camera> {
                                           ),
                                         ),
                                       ),
-                                      (widget.enableCameraChange)
-                                          ? CircleAvatar(
-                                              child: RotateIcon(
-                                                child: OrientationWidget(
-                                                  orientation: orientation,
-                                                  child: Icon(
-                                                    Icons.cached,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                                onTap: () => _changeCamera(),
-                                              ),
-                                              backgroundColor: Colors.black38,
-                                              radius: 25.0,
-                                            )
-                                          : CircleAvatar(
-                                              child: Container(),
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              radius: 25.0,
-                                            ),
+                                      // (widget.enableCameraChange)
+                                      //     ? CircleAvatar(
+                                      //         child: RotateIcon(
+                                      //           child: OrientationWidget(
+                                      //             orientation: orientation,
+                                      //             child: Icon(
+                                      //               Icons.cached,
+                                      //               color: Colors.white,
+                                      //             ),
+                                      //           ),
+                                      //           onTap: () => _changeCamera(),
+                                      //         ),
+                                      //         backgroundColor: Colors.black38,
+                                      //         radius: 25.0,
+                                      //       )
+                                      //     : CircleAvatar(
+                                      //         child: Container(),
+                                      //         backgroundColor:
+                                      //             Colors.transparent,
+                                      //         radius: 25.0,
+                                      //       ),
                                     ],
                                   );
                           }),
@@ -404,6 +404,7 @@ class _CameraState extends State<Camera> {
                                       radius: 25.0,
                                     ),
                                     _getButtonPhoto(),
+                                    //this is newe line
                                     CircleAvatar(
                                       backgroundColor: Colors.transparent,
                                       child: IconButton(
@@ -415,26 +416,6 @@ class _CameraState extends State<Camera> {
                                         ),
                                       ),
                                     ),
-                                    (widget.enableCameraChange)
-                                        ? CircleAvatar(
-                                            child: RotateIcon(
-                                              child: OrientationWidget(
-                                                orientation: orientation,
-                                                child: Icon(
-                                                  Icons.cached,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              onTap: () => _changeCamera(),
-                                            ),
-                                            backgroundColor: Colors.black38,
-                                            radius: 25.0,
-                                          )
-                                        : CircleAvatar(
-                                            child: Container(),
-                                            backgroundColor: Colors.transparent,
-                                            radius: 25.0,
-                                          ),
                                   ],
                                 );
                         }),
